@@ -108,6 +108,8 @@ class Menu extends Component {
 
           <Submit>
             <Button
+              appearance="minimal"
+              intent="success"
               onClick={() => {
                 this.props.addNewTask(this.state.task);
                 this.setState({
@@ -153,6 +155,8 @@ class Menu extends Component {
           </Item>
           <Submit>
             <Button
+              appearance="minimal"
+              intent="success"
               onClick={() => {
                 this.props.addNewColumn(this.state.collum);
                 this.setState({ columnIsShown: false });
@@ -163,10 +167,14 @@ class Menu extends Component {
           </Submit>
         </Dialog>
 
-        <Button onClick={() => this.setState({ taskIsShown: true })}>
+        <Button
+          intent="none"
+          onClick={() => this.setState({ taskIsShown: true })}
+        >
           New task
         </Button>
         <Button
+          intent="none"
           marginLeft={"1em"}
           onClick={() => this.setState({ columnIsShown: true })}
         >
