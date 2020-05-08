@@ -5,6 +5,16 @@ import { Button, Combobox, Dialog, Textarea, TextInput } from "evergreen-ui";
 import { addNewTask, addNewColumn } from "./redux/actions/todo/index";
 import { connect } from "react-redux";
 import ColorPicker from "./colorPicker";
+    // static getDerivedStateFromProps(props, state) {
+//     //     if (props.app.todo.todos !== props.todos[0]) {
+//     //         return {
+//     //             todos: props.app.todo.todos,
+//     //         };
+//     //     }
+//     //
+//     //     // Return null if the state hasn't changed
+//     //     return null;
+//     // }
 
 const Components = styled.div`
   padding: 1em;
@@ -117,6 +127,9 @@ class Menu extends Component {
                   task: { color: "#FFFFFF", status: false },
                 });
               }}
+              disabled={
+                this.state.task.owner === "" || this.state.task.owner === null
+              }
             >
               Submit
             </Button>

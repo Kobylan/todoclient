@@ -15,6 +15,10 @@ import {
 } from "./redux/actions/todo";
 import Menu from "./menu";
 import { Pane } from "evergreen-ui";
+import socket from "socket.io-client";
+const io = socket("http://localhost:5000", {
+  transports: ["websocket"],
+});
 
 const Container = styled.div`
   display: flex;
@@ -39,6 +43,9 @@ class Todo extends React.Component {
     await this.props.getTodos();
     this.setState({
       todos: this.props.app.todo.todos,
+    });
+    await io.on("data", (data) => {
+      this.props.getTodos();
     });
   }
 
@@ -103,7 +110,7 @@ class Todo extends React.Component {
         <Pane
           display="flex"
           margin={"1em"}
-          height={"70vh"}
+          minHeight={"70vh"}
           width={"100%-2em"}
           overflow={"auto"}
         >
