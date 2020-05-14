@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Droppable, Draggable } from 'react-beautiful-dnd';
 import Task from './task.jsx';
-import {BsThreeDots, MdSettings} from "react-icons/all";
+import {RiInformationLine} from "react-icons/all";
 import {Button, Dialog, TextInput} from "evergreen-ui";
-import {TwitterPicker} from "react-color";
 import ColorPicker from "./colorPicker";
 import {changeColumns, deleteColumn} from "./redux/actions/todo";
 import {connect} from "react-redux";
@@ -93,7 +92,7 @@ const Submit = styled.div`
                                 this.props.deleteColumn(this.state.collum._id);
                                 this.setState({
                                     activeId: null,
-                                    collum: { },
+                                    collum: {name:"",color:"", _id:""},
                                 });
                             }}
                         >
@@ -107,7 +106,7 @@ const Submit = styled.div`
                                 this.props.changeColumns(this.state.collum);
                                 this.setState({
                                     activeId: null,
-                                    collum: { },
+                                    collum: {name:"",color:"", _id:""},
                                 });
                             }}
                         >
@@ -127,7 +126,7 @@ const Submit = styled.div`
                     >
                         <Title {...provided.dragHandleProps}>
                             {this.props.column.name}
-                            <BsThreeDots
+                            <RiInformationLine
                                 style={{float:"right"}}
                                 cursor={"pointer"}
                                 marginLeft={"1em"}

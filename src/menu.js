@@ -1,20 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { TwitterPicker } from "react-color";
 import { Button, Combobox, Dialog, Textarea, TextInput } from "evergreen-ui";
 import { addNewTask, addNewColumn } from "./redux/actions/todo/index";
 import { connect } from "react-redux";
 import ColorPicker from "./colorPicker";
-    // static getDerivedStateFromProps(props, state) {
-//     //     if (props.app.todo.todos !== props.todos[0]) {
-//     //         return {
-//     //             todos: props.app.todo.todos,
-//     //         };
-//     //     }
-//     //
-//     //     // Return null if the state hasn't changed
-//     //     return null;
-//     // }
 
 const Components = styled.div`
   padding: 1em;
@@ -45,8 +34,8 @@ class Menu extends Component {
   state = {
     taskIsShown: false,
     columnIsShown: false,
-    task: { owner: "", name: "", color: "#FFFFFF", status: false, desk: "" },
-    collum: { name: "", color: "#FFFFFF" },
+    task: { owner: "", name: "", color: "", status: false, desk: "" },
+    collum: { name: "", color: "" },
   };
 
   render() {
@@ -59,7 +48,12 @@ class Menu extends Component {
         <Dialog
           isShown={this.state.taskIsShown}
           title="Add new task"
-          onCloseComplete={() => this.setState({ taskIsShown: false })}
+          onCloseComplete={() =>
+            this.setState({
+              taskIsShown: false,
+              task: { owner: "", name: "", color: "", status: false, desk: "" },
+            })
+          }
           hasFooter={false}
         >
           <Inputs>
@@ -139,7 +133,12 @@ class Menu extends Component {
         <Dialog
           isShown={this.state.columnIsShown}
           title="Add new column"
-          onCloseComplete={() => this.setState({ columnIsShown: false })}
+          onCloseComplete={() =>
+            this.setState({
+              columnIsShown: false,
+              collum: { name: "", color: "" },
+            })
+          }
           hasFooter={false}
         >
           <Item>
@@ -156,12 +155,11 @@ class Menu extends Component {
           </Item>
           <Item>
             <Title>Color</Title>
-            <TwitterPicker
+            <ColorPicker
               color={this.state.collum.color}
-              triangle={"hide"}
               onChangeComplete={(color) =>
                 this.setState({
-                  collum: { ...this.state.collum, color: color.hex },
+                  collum: { ...this.state.collum, color: color },
                 })
               }
             />
@@ -172,7 +170,7 @@ class Menu extends Component {
               intent="success"
               onClick={() => {
                 this.props.addNewColumn(this.state.collum);
-                this.setState({ columnIsShown: false });
+                this.setState({ columnIsShown: false, collum: {} });
               }}
             >
               Submit
@@ -197,5 +195,9 @@ class Menu extends Component {
     );
   }
 }
-
-export default connect(null, { addNewTask, addNewColumn })(Menu);
+const mapStateToProps = (state) => {
+  return {
+    app: state.todoApp,
+  };
+};
+export default connect(mapStateToProps, { addNewTask, addNewColumn })(Menu);

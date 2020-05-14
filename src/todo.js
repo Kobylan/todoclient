@@ -10,15 +10,11 @@ import {
   addNewColumn,
   deleteColumn,
   deleteTask,
-  patchColumn,
+  movingColumn,
   patchColumns,
 } from "./redux/actions/todo";
 import Menu from "./menu";
 import { Pane } from "evergreen-ui";
-import socket from "socket.io-client";
-const io = socket("http://localhost:5000", {
-  transports: ["websocket"],
-});
 
 const Container = styled.div`
   display: flex;
@@ -44,9 +40,6 @@ class Todo extends React.Component {
     this.setState({
       todos: this.props.app.todo.todos,
     });
-    await io.on("data", (data) => {
-      this.props.getTodos();
-    });
   }
 
   onDragEnd = (result) => {
@@ -71,7 +64,7 @@ class Todo extends React.Component {
       const newTodos = {
         0: { ...this.state.todos, collums: newColumnOrder },
       };
-      this.props.patchColumn(newColumnOrder, newTodos);
+      this.props.movingColumn(newColumnOrder, newTodos);
       return;
     }
 
@@ -114,10 +107,7 @@ class Todo extends React.Component {
           width={"100%-2em"}
           overflow={"auto"}
         >
-          <DragDropContext
-            onDragEnd={this.onDragEnd}
-            // onDragStart={this.onDragStart}
-          >
+          <DragDropContext onDragEnd={this.onDragEnd}>
             <Droppable
               droppableId="all-columns"
               direction="horizontal"
@@ -157,6 +147,6 @@ export default connect(mapStateToProps, {
   deleteColumn,
   deleteTask,
   changeColumns,
-  patchColumn,
+  movingColumn,
   patchColumns,
 })(Todo);
