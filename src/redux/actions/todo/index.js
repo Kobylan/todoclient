@@ -1,5 +1,5 @@
 import axios from "axios";
-const apiURI = "http://localhost:5000";
+const apiURI = "https://cryptic-beach-01154.herokuapp.com";
 export const getTodos = () => {
   return async (dispatch) => {
     await axios
