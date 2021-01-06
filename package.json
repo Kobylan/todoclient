@@ -5,7 +5,7 @@
   "homepage": "https://kobylan.github.io/todoclient",
   "dependencies": {
     "@atlaskit/css-reset": "^5.0.10",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "evergreen-ui": "^4.27.4",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
